@@ -9,12 +9,18 @@ type Props = {
 
 export default class SaalVideo extends React.PureComponent {
   props: Props;
+  video: any;
   getVideoNode() {
     return this.refs.video;
   }
   componentDidMount() {
     const { video } = this.refs;
-    videojs(video);
+    this.video = videojs(video);
+  }
+  killVideo() {
+    const { video } = this.refs;
+    video.pause();
+    this.video.reset();
   }
   render() {
     const { saal } = this.props;

@@ -13,6 +13,9 @@ const config = require('@terse/webpack').api()
   minChunks: 3,
   children: true,
 })
+.plugin('webpack.DefinePlugin', {
+  SENTRY_DSN: JSON.stringify(process.env.SENTRY_DSN),
+})
 .output({
   path: 'www',
   filename: '[name]-[hash].js',

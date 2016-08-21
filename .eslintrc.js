@@ -5,7 +5,7 @@ module.exports = {
     node: true,
   },
   globals: {
-
+    SENTRY_DSN: false,
   },
   plugins: [
     'header',

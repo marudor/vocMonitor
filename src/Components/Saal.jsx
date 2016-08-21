@@ -13,6 +13,9 @@ export default class Saal extends React.PureComponent {
   getVideoNode() {
     return this.refs.video.getVideoNode();
   }
+  killVideo() {
+    this.refs.video.killVideo();
+  }
   render() {
     const { saal, ctx } = this.props;
     return (

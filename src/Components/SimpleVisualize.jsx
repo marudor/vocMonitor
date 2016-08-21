@@ -90,6 +90,9 @@ export default class SimpleVisualize extends React.PureComponent {
   @autobind
   remove() {
     this.stopRendering = true;
+    const { children } = this.props;
+    const reactVideo = React.Children.only(children);
+    reactVideo._owner.getPublicInstance().killVideo();
     this.forceUpdate();
   }
   render() {
