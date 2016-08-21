@@ -1,0 +1,19 @@
+[ignore]
+.*node_modules/fbjs.*
+
+[include]
+src/
+
+[libs]
+
+[options]
+esproposal.decorators=ignore
+esproposal.class_static_fields=enable
+esproposal.class_instance_fields=enable
+esproposal.export_star_as=enable
+unsafe.enable_getters_and_setters=true
+experimental.strict_type_args=true
+experimental.const_params=true
+
+suppress_comment=\\(.\\|\n\\)*\\$FlowFixMe\\($\\|[^(]\\|(\\(>=0\\.\\(2[0-0]\\|1[0-9]\\|[0-9]\\).[0-9]\\)? *\\(site=[a-z,_]*react_native[a-z,_]*\\)?)\\)
+module.name_mapper='.*\.css$' -> 'React'
