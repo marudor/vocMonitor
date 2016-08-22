@@ -1,4 +1,6 @@
 // @flow
+import 'react-hot-loader/patch';
+
 import 'babel-polyfill';
 import P from 'bluebird';
 import Raven from 'raven-js';
