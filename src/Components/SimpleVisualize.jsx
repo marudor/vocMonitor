@@ -1,6 +1,5 @@
 // @flow
 import React from 'react';
-import { autobind } from 'core-decorators';
 
 type Props = {
   children?: any;
@@ -46,14 +45,13 @@ export default class SimpleVisualize extends React.PureComponent {
   componentWillUnmount() {
     this.stopRendering = true;
   }
-  @autobind
-  toggleMute() {
+  toggleMute = () => {
     const muted = !this.state.muted;
     this.gain.gain.value = muted ? 0 : 1;
     this.setState({
       muted,
     });
-  }
+  };
   componentDidMount() {
     const { children, ctx } = this.props;
     const reactVideo = React.Children.only(children);
@@ -87,14 +85,13 @@ export default class SimpleVisualize extends React.PureComponent {
     };
     renderFrame();
   }
-  @autobind
-  remove() {
+  remove = () => {
     this.stopRendering = true;
     const { children } = this.props;
     const reactVideo = React.Children.only(children);
     reactVideo._owner.getPublicInstance().killVideo();
     this.forceUpdate();
-  }
+  };
   render() {
     if (this.stopRendering) {
       return null;

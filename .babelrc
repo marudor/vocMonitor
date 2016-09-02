@@ -1,9 +1,6 @@
 {
   "comments": false,
   "presets": [["es2015", { "modules": false }], "stage-2", "react"],
-  "plugins": [
-    "transform-decorators-legacy"
-  ],
   "env": {
     "hot": {
       "plugins": [
