@@ -5,6 +5,7 @@ import { autobind } from 'core-decorators';
 type Props = {
   children?: any;
   ctx: AudioContext;
+  minWidth: number,
 }
 
 type State = {
@@ -28,7 +29,6 @@ const style = {
     flex: '1 1 0',
     display: 'flex',
     flexDirection: 'column',
-    minWidth: '25%',
   },
   canvas: {
     height: 70,
@@ -99,15 +99,18 @@ export default class SimpleVisualize extends React.PureComponent {
     if (this.stopRendering) {
       return null;
     }
-    const { children } = this.props;
+    const { children, minWidth } = this.props;
     const { saal } = (children || {}).props;
     const { muted } = this.state;
     const muteNode = muted ? (
       <span style={style.muted}>muted</span>
     ) : <span/>;
-  const removeNode = <span style={style.remove} onClick={this.remove}>[-]</span>;
+    const removeNode = <span style={style.remove} onClick={this.remove}>[-]</span>;
       return (
-        <div style={style.main} onClick={this.toggleMute}>
+        <div style={{
+            ...style.main,
+            minWidth: `${minWidth}%`,
+          }} onClick={this.toggleMute}>
           <h2 style={style.head}>{removeNode}Saal {saal}{muteNode}</h2>
           {children}
           <canvas style={style.canvas} ref="visualize"/>

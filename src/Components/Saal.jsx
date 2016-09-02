@@ -6,6 +6,7 @@ import SimpleVisualize from './SimpleVisualize';
 type Props = {
   saal: number,
   ctx: AudioContext,
+  minWidth: number,
 }
 
 export default class Saal extends React.PureComponent {
@@ -17,9 +18,9 @@ export default class Saal extends React.PureComponent {
     this.refs.video.killVideo();
   }
   render() {
-    const { saal, ctx } = this.props;
+    const { saal, ctx, minWidth } = this.props;
     return (
-      <SimpleVisualize ctx={ctx}>
+      <SimpleVisualize minWidth={minWidth} ctx={ctx}>
         <SaalVideo ref="video" saal={saal}/>
       </SimpleVisualize>
     );

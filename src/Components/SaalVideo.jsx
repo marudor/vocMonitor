@@ -16,6 +16,16 @@ export default class SaalVideo extends React.PureComponent {
   componentDidMount() {
     const { video } = this.refs;
     this.video = videojs(video);
+    this.video.on('error', this.videoError);
+  }
+  videoError = () => {
+    setTimeout(() => {
+      this.restartVideo();
+    }, 20000);
+  };
+  restartVideo() {
+    this.video.load();
+    this.video.play();
   }
   killVideo() {
     const { video } = this.refs;
