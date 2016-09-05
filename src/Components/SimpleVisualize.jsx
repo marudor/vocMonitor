@@ -30,7 +30,7 @@ const style = {
     flexDirection: 'column',
   },
   canvas: {
-    height: 70,
+    height: 120,
   },
 };
 
@@ -71,13 +71,14 @@ export default class SimpleVisualize extends React.PureComponent {
     const renderFrame = () => {
       canvasContext.clearRect(0, 0, canvas.width, canvas.height);
       canvasContext.fillStyle = '#00CCFF';
-      const dataArray = new Uint8Array(analyser.frequencyBinCount);
-      analyser.getByteFrequencyData(dataArray);
-      for (let i = 0; i < 100; i++) {
-        const x = i * 3;
-        const width = 2;
-        const height = -(dataArray[i] / 2) - 3;
-        canvasContext.fillRect(x, canvas.height, width, height);
+      const dataArray = new Float32Array(analyser.frequencyBinCount);
+      analyser.getFloatFrequencyData(dataArray);
+      const barWidth = (canvas.width / dataArray.length) * 2.5;
+      let x = 0;
+      for (let i = 0; i < dataArray.length; i++) {
+        const height = ((dataArray[i] * 2) + 200);
+        canvasContext.fillRect(x, canvas.height - height, barWidth, height);
+        x += barWidth;
       }
       if (!this.stopRendering) {
         window.requestAnimationFrame(renderFrame);
