@@ -57,8 +57,10 @@ export default class SimpleVisualize extends React.PureComponent {
     const reactVideo = React.Children.only(children);
     const videoNode = reactVideo._owner.getPublicInstance().getVideoNode();
     const canvas = this.refs.visualize;
-    const analyser = this.analyser = ctx.createAnalyser();
-    const gain = this.gain = ctx.createGain();
+    const analyser = ctx.createAnalyser();
+    this.analyser = analyser;
+    const gain = ctx.createGain();
+    this.gain = gain;
     const mediaElementSource = ctx.createMediaElementSource(videoNode);
     mediaElementSource.connect(analyser);
     analyser.connect(gain);
@@ -102,17 +104,17 @@ export default class SimpleVisualize extends React.PureComponent {
     const { muted } = this.state;
     const muteNode = muted ? (
       <span style={style.muted}>muted</span>
-    ) : <span/>;
+    ) : <span />;
     const removeNode = <span style={style.remove} onClick={this.remove}>[-]</span>;
-      return (
-        <div style={{
-            ...style.main,
-            minWidth: `${minWidth}%`,
-          }} onClick={this.toggleMute}>
-          <h2 style={style.head}>{removeNode}Saal {saal}{muteNode}</h2>
-          {children}
-          <canvas style={style.canvas} ref="visualize"/>
-        </div>
-      );
-    }
+    return (
+      <div style={{
+        ...style.main,
+        minWidth: `${minWidth}%`,
+      }} onClick={this.toggleMute}>
+        <h2 style={style.head}>{removeNode}Saal {saal}{muteNode}</h2>
+        {children}
+        <canvas style={style.canvas} ref="visualize" />
+      </div>
+    );
   }
+}
