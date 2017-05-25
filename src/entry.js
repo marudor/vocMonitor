@@ -8,19 +8,20 @@ import ReactDOM from 'react-dom';
 
 async function initialize() {
   const re = /s(\d).png$/;
-  const saalConfig = (await axios.get('https://voc.marudor.de/api.json')).data[
-    0
-  ];
-  const groups = saalConfig.groups;
+  const saalConfigs = (await axios.get('https://voc.marudor.de/api.json')).data;
   const saal = [];
+  saalConfigs.forEach(s => {
+  const groups = s.groups;
   groups.forEach(g => {
     g.rooms.forEach(r => {
-      const x = (r.thumb: string).match(re);
+      // $FlowFixMe
+      const x: ?number[] = (r.thumb: string).match(re);
       if (x) {
         saal.push(x[1]);
       }
     });
   });
+});
 
   ReactDOM.render(
     <AppContainer>
