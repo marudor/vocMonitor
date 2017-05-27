@@ -1,49 +1,83 @@
 // @flow
 import React from 'react';
-import videojs from 'video.js';
-import 'video.js/dist/video-js.min.css';
 
 type Props = {
-  saal: number,
-}
+  children?: any,
+  ctx: AudioContext,
+  minWidth: number,
+  VisualizeComponent: Object,
+};
+
+type State = {
+  muted: boolean,
+};
 
 export default class SaalVideo extends React.PureComponent {
   props: Props;
-  video: any;
-  getVideoNode() {
-    return this.refs.video;
-  }
-  componentDidMount() {
-    const { video } = this.refs;
-    this.video = videojs(video);
-    this.video.on('error', this.videoError);
-  }
-  videoError = () => {
-    setTimeout(() => {
-      this.restartVideo();
-    }, 20000);
+  stopRendering = false;
+  state: State = {
+    muted: true,
   };
-  restartVideo() {
-    this.video.load();
-    this.video.play();
-  }
-  killVideo() {
-    const { video } = this.refs;
-    video.pause();
-    this.video.reset();
-  }
+  toggleMute = () => {
+    const muted = !this.state.muted;
+    this.setState({
+      muted,
+    });
+  };
+  remove = () => {
+    this.stopRendering = true;
+    const { children } = this.props;
+    const reactVideo = React.Children.only(children);
+    reactVideo._owner.getPublicInstance().killVideo();
+    this.forceUpdate();
+  };
   render() {
-    const { saal } = this.props;
+    if (this.stopRendering) {
+      return null;
+    }
+    const { VisualizeComponent, children, minWidth, ctx } = this.props;
+    const { saal } = (children || {}).props;
+    const { muted } = this.state;
+    const muteNode = muted
+      ? <span style={style.muted}>{'muted'}</span>
+      : <span />;
+    const removeNode = (
+      <span style={style.remove} onClick={this.remove}>{'[-]'}</span>
+    );
     return (
-      <video ref="video" autoPlay crossOrigin="anonymous" preload="none" className="video-js">
-        {/* <source src="https://voc.marudor.de/debug.mp4"/> */}
-        <source src={`https://voc.marudor.de/cdn/s${saal}_native_sd.webm`} type="video/webm"/>
-        <source src={`https://voc.marudor.de/cdn/hls/s${saal}_native_sd.m3u8`} type="application/vnd.apple.mpegURL"/>
-        <p className="vjs-no-js">
-          To view this video please enable JavaScript, and consider upgrading to a web browser that
-          <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-        </p>
-      </video>
+      <div
+        style={{
+          ...style.main,
+          minWidth: `${minWidth}%`,
+        }}
+        onClick={this.toggleMute}>
+        <h2 style={style.head}>{removeNode}{'Saal'} {saal}{muteNode}</h2>
+        {children}
+        <VisualizeComponent muted={muted} ctx={ctx} />
+      </div>
     );
   }
 }
+
+const style = {
+  remove: {
+    cursor: 'pointer',
+  },
+  muted: {
+    color: 'red',
+  },
+  head: {
+    WebkitUserSelect: 'none',
+    display: 'flex',
+    justifyContent: 'space-around',
+    margin: 0,
+  },
+  main: {
+    flex: '1 1 0',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  canvas: {
+    height: 120,
+  },
+};

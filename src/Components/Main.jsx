@@ -11,8 +11,8 @@ const style = {
 const ctx = new (window.AudioContext || window.webkitAudioContext)();
 
 type Props = {
-  saal?: number[]
-}
+  saal?: number[],
+};
 
 export default class Main extends React.PureComponent {
   props: Props;
@@ -29,12 +29,8 @@ export default class Main extends React.PureComponent {
     }
     return (
       <div style={style}>
-        {
-          // $FlowFixMe
-          saal.map(i => (
-            <Saal key={i} minWidth={minWidth} saal={i} ctx={ctx}/>
-          ))
-        }
+        {// $FlowFixMe
+        saal.map(i => <Saal key={i} minWidth={minWidth} saal={i} ctx={ctx} />)}
       </div>
     );
   }

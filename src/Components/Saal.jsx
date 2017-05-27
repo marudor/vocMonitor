@@ -1,13 +1,14 @@
 // @flow
+import CanvasVisualize from './CanvasVisualize';
 import React from 'react';
 import SaalVideo from './SaalVideo';
-import SimpleVisualize from './SimpleVisualize';
+import Video from './Video';
 
 type Props = {
   saal: number,
   ctx: AudioContext,
   minWidth: number,
-}
+};
 
 export default class Saal extends React.PureComponent {
   props: Props;
@@ -20,9 +21,12 @@ export default class Saal extends React.PureComponent {
   render() {
     const { saal, ctx, minWidth } = this.props;
     return (
-      <SimpleVisualize minWidth={minWidth} ctx={ctx}>
-        <SaalVideo ref="video" saal={saal}/>
-      </SimpleVisualize>
+      <SaalVideo
+        VisualizeComponent={CanvasVisualize}
+        minWidth={minWidth}
+        ctx={ctx}>
+        <Video ref="video" saal={saal} />
+      </SaalVideo>
     );
   }
 }

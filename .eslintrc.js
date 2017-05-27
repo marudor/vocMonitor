@@ -7,10 +7,8 @@ module.exports = {
   globals: {
     SENTRY_DSN: false,
   },
-  plugins: [
-    'header',
-  ],
+  plugins: [],
   rules: {
-    'header/header': [2, 'line', ' @flow'],
-  }
-}
+    'no-mixed-operators': 0,
+  },
+};

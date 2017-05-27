@@ -17,3 +17,4 @@ experimental.const_params=true
 
 suppress_comment=\\(.\\|\n\\)*\\$FlowFixMe\\($\\|[^(]\\|(\\(>=0\\.\\(2[0-0]\\|1[0-9]\\|[0-9]\\).[0-9]\\)? *\\(site=[a-z,_]*react_native[a-z,_]*\\)?)\\)
 module.name_mapper='.*\.css$' -> 'React'
+module.name_mapper='react-hot-loader/patch' -> 'React'
