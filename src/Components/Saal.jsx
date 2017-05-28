@@ -5,9 +5,9 @@ import SaalVideo from './SaalVideo';
 import Video from './Video';
 
 type Props = {
-  saal: number,
+  room: { name: string, number: number },
   ctx: AudioContext,
-  minWidth: number,
+  minWidth: number
 };
 
 export default class Saal extends React.PureComponent {
@@ -19,13 +19,14 @@ export default class Saal extends React.PureComponent {
     this.refs.video.killVideo();
   }
   render() {
-    const { saal, ctx, minWidth } = this.props;
+    const { room, ctx, minWidth } = this.props;
     return (
       <SaalVideo
+        name={room.name}
         VisualizeComponent={CanvasVisualize}
         minWidth={minWidth}
         ctx={ctx}>
-        <Video ref="video" saal={saal} />
+        <Video ref="video" saal={room.number} />
       </SaalVideo>
     );
   }

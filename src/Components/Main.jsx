@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import Saal from './Saal';
+import type { ConferenceInfo } from '../entry';
 
 const style = {
   display: 'flex',
@@ -11,26 +12,25 @@ const style = {
 const ctx = new (window.AudioContext || window.webkitAudioContext)();
 
 type Props = {
-  saal?: number[],
+  conferences: ConferenceInfo[]
 };
 
 export default class Main extends React.PureComponent {
   props: Props;
-  static defaultProps = {
-    saal: [1, 2, 3, 4, 5, 6, 7, 8],
-  };
   render() {
-    const { saal } = this.props;
-    // $FlowFixMe
-    let minWidth = 100 / saal.length * 1.5;
-    // $FlowFixMe
-    if (saal.length <= 2) {
+    const { conferences } = this.props;
+    const streamCount = conferences.reduce((p, c) => c.rooms.length + p, 0);
+    let minWidth = 100 / streamCount * 1.5;
+    if (streamCount <= 2) {
       minWidth = 50;
     }
     return (
       <div style={style}>
-        {// $FlowFixMe
-        saal.map(i => <Saal key={i} minWidth={minWidth} saal={i} ctx={ctx} />)}
+        {conferences.map(c =>
+          c.rooms.map(r => (
+            <Saal key={r.number} minWidth={minWidth} room={r} ctx={ctx} />
+          ))
+        )}
       </div>
     );
   }

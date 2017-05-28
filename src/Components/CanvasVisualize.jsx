@@ -3,7 +3,7 @@ import React from 'react';
 
 type Props = {
   ctx: AudioContext,
-  muted: boolean,
+  muted: boolean
 };
 
 const style = {
@@ -52,13 +52,12 @@ export default class CanvasVisualize extends React.PureComponent {
     const renderFrame = () => {
       canvasContext.clearRect(0, 0, canvas.width, canvas.height);
       canvasContext.fillStyle = '#00CCFF';
-      const dataArray = new Float32Array(analyser.frequencyBinCount / 1.3);
+      const dataArray = new Float32Array(analyser.frequencyBinCount);
       analyser.getFloatFrequencyData(dataArray);
-      const barWidth = canvas.width / dataArray.length;
+      const barWidth = canvas.width / dataArray.length * 2.5;
       let x = 0;
       for (let i = 0; i < dataArray.length; i++) {
-        const percentage = Math.abs(dataArray[i]) / 255 * 100;
-        const height = 100 - canvas.height / 100 * percentage / 1.3;
+        const height = dataArray[i] * 2 + 200;
         canvasContext.fillRect(x, canvas.height - height, barWidth, height);
         x += barWidth;
       }

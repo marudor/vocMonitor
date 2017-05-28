@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "hot": "DASHBOARD=true BABEL_ENV=hot webpack-dev-server --hot --inline --content-base www/ --history-api-fallback --quiet",
-    "dev": "DASHBOARD=true webpack-dev-server --watch --inline --content-base www/ --history-api-fallback --quiet",
+    "dev": "DASHBOARD=true webpack-dashboard --  webpack-dev-server --watch --inline --content-base www/ --history-api-fallback --quiet",
     "build": "webpack --bail"
   },
   "repository": {

@@ -57,20 +57,21 @@ name = '[name].js';
 if (node_env === 'production') {
   //In Production wird ein Hash an den Output gepackt
   name = '[name]-[hash].js';
-  plugins.push(new webpack.optimize.UglifyJsPlugin({
-    compress: {
-      warnings: false,
-    },
-    output: {
-      comments: false,
-    },
-    screwIe8: true,
-    sourceMap: false,
-  }));
+  plugins.push(
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false,
+      },
+      output: {
+        comments: false,
+      },
+      screwIe8: true,
+      sourceMap: false,
+    })
+  );
 }
 
 const webpackConfig = {
-
   context: __dirname,
   resolve: {
     // mainFields: ['jsnext:main', 'browser', 'main'],
@@ -96,17 +97,13 @@ const webpackConfig = {
         test: /\.jsx?$/,
         exclude: /(node_modules|primusClient)/,
         loader: 'babel-loader',
-        include: [
-          path.resolve(__dirname, 'src'),
-        ],
+        include: [path.resolve(__dirname, 'src')],
         query: { cacheDirectory: true },
       },
       {
         test: /\.(CSS|css)\.js$/,
         exclude: /(node_modules)/,
-        include: [
-          path.resolve(__dirname, 'src'),
-        ],
+        include: [path.resolve(__dirname, 'src')],
         loader: 'inline-css-loader',
       },
       { test: /\.pdf$/, loader: 'file-loader' },
@@ -125,9 +122,7 @@ const webpackConfig = {
       /.*bluebird.*/,
     ],
   },
-  plugins: [
-    ...plugins,
-  ],
+  plugins: [...plugins],
   //Proxy einstellungen um ans Backend zu dirigieren
   devServer: {
     overlay: true,
@@ -163,9 +158,7 @@ if (process.env.NODE_ENV !== 'production') {
     enforce: 'pre',
     test: /.jsx?$/,
     loader: 'eslint-loader',
-    include: [
-      path.resolve(__dirname, 'src'),
-    ],
+    include: [path.resolve(__dirname, 'src')],
     exclude: /(.*\.config.*|.*node_modules.*|.*inferno.*)/,
   });
 }
