@@ -10,5 +10,6 @@ module.exports = {
   plugins: [],
   rules: {
     'no-mixed-operators': 0,
+    'no-undef': 0,
   },
 };

@@ -14,12 +14,12 @@ export type Conference = {
   keywords: string,
   startsAt: string,
   endsAt: string,
-  groups: Group[]
+  groups: Group[],
 };
 
 export type Group = {
   group: string,
-  rooms: Room[]
+  rooms: Room[],
 };
 
 export type Room = {
@@ -28,7 +28,7 @@ export type Room = {
   thumb: string,
   link: string,
   display: string,
-  streams: Stream[]
+  streams: Stream[],
 };
 
 export type Stream = {
@@ -37,13 +37,13 @@ export type Stream = {
   type: string,
   isTranslated: boolean,
   videoSize: [number, number],
-  urls: { [type: string]: StreamURL }
+  urls: { [type: string]: StreamURL },
 };
 
 export type StreamURL = {
   display: string,
   tech: string,
-  url: string
+  url: string,
 };
 
 export type ConferenceInfo = {
@@ -51,15 +51,13 @@ export type ConferenceInfo = {
   slug: string,
   rooms: {
     name: string,
-    number: number
-  }[]
+    number: number,
+  }[],
 };
 
 async function initialize() {
-  const re = /s(\d).png$/;
-  const saalConfigs: Conference[] = (await axios.get(
-    'https://voc.marudor.de/api.json'
-  )).data;
+  const re = /s(\d+).png$/;
+  const saalConfigs: Conference[] = (await axios.get('https://voc.marudor.de/api.json')).data;
   const conferences = [];
   saalConfigs.forEach(s => {
     const conferenceInfo = {
@@ -67,6 +65,9 @@ async function initialize() {
       slug: s.slug,
       rooms: [],
     };
+    if (conferenceInfo.name === 'Sendeschleife') {
+      return;
+    }
     const groups = s.groups;
     groups.forEach(g => {
       g.rooms.forEach(r => {
@@ -83,10 +84,7 @@ async function initialize() {
     conferences.push(conferenceInfo);
   });
 
-  ReactDOM.render(
-    <Main conferences={conferences} />,
-    document.querySelector('#vocMonitor')
-  );
+  ReactDOM.render(<Main conferences={conferences} />, document.querySelector('#vocMonitor'));
 }
 
 const REFRESH_RATE = 60000;

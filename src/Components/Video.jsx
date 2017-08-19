@@ -7,8 +7,7 @@ type Props = {
   saal: number,
 };
 
-export default class Video extends React.PureComponent {
-  props: Props;
+export default class Video extends React.PureComponent<Props> {
   video: any;
   getVideoNode() {
     return this.refs.video;
@@ -35,27 +34,13 @@ export default class Video extends React.PureComponent {
   render() {
     const { saal } = this.props;
     return (
-      <video
-        ref="video"
-        autoPlay
-        crossOrigin="anonymous"
-        preload="none"
-        className="video-js">
+      <video ref="video" autoPlay crossOrigin="anonymous" preload="none" className="video-js">
         {/* <source src="https://voc.marudor.de/debug.mp4"/> */}
-        <source
-          src={`https://voc.marudor.de/cdn/s${saal}_native_sd.webm`}
-          type="video/webm"/>
-        <source
-          src={`https://voc.marudor.de/cdn/hls/s${saal}_native_sd.m3u8`}
-          type="application/vnd.apple.mpegURL"/>
+        <source src={`https://voc.marudor.de/cdn/s${saal}_native_sd.webm`} type="video/webm" />
+        <source src={`https://voc.marudor.de/cdn/hls/s${saal}_native_sd.m3u8`} type="application/vnd.apple.mpegURL" />
         <p className="vjs-no-js">
-          {
-            'To view this video please enable JavaScript, and consider upgrading to a web browser that'
-          }
-          <a
-            href="http://videojs.com/html5-video-support/"
-            target="_blank"
-            rel="noopener noreferrer">
+          {'To view this video please enable JavaScript, and consider upgrading to a web browser that'}
+          <a href="http://videojs.com/html5-video-support/" target="_blank" rel="noopener noreferrer">
             {'supports HTML5 video'}
           </a>
         </p>

@@ -12,25 +12,23 @@ const style = {
 const ctx = new (window.AudioContext || window.webkitAudioContext)();
 
 type Props = {
-  conferences: ConferenceInfo[]
+  conferences: ConferenceInfo[],
 };
 
-export default class Main extends React.PureComponent {
-  props: Props;
+export default class Main extends React.PureComponent<Props> {
   render() {
     const { conferences } = this.props;
     const streamCount = conferences.reduce((p, c) => c.rooms.length + p, 0);
-    let minWidth = 100 / streamCount * 1.5;
+    let minWidth = 100 / streamCount * 2;
+    if (streamCount % 2 !== 0) {
+      minWidth /= 1.2;
+    }
     if (streamCount <= 2) {
       minWidth = 50;
     }
     return (
       <div style={style}>
-        {conferences.map(c =>
-          c.rooms.map(r => (
-            <Saal key={r.number} minWidth={minWidth} room={r} ctx={ctx} />
-          ))
-        )}
+        {conferences.map(c => c.rooms.map(r => <Saal key={r.number} minWidth={minWidth} room={r} ctx={ctx} />))}
       </div>
     );
   }

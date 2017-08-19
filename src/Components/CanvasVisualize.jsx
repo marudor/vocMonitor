@@ -3,7 +3,7 @@ import React from 'react';
 
 type Props = {
   ctx: AudioContext,
-  muted: boolean
+  muted: boolean,
 };
 
 const style = {
@@ -12,8 +12,7 @@ const style = {
   },
 };
 
-export default class CanvasVisualize extends React.PureComponent {
-  props: Props;
+export default class CanvasVisualize extends React.PureComponent<Props> {
   stopRendering: boolean = false;
   analyser: AnalyserNode;
   gain: GainNode;

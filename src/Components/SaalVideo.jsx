@@ -6,17 +6,16 @@ type Props = {
   ctx: AudioContext,
   minWidth: number,
   VisualizeComponent: Object,
-  name: string
+  name: string,
 };
 
 type State = {
-  muted: boolean
+  muted: boolean,
 };
 
-export default class SaalVideo extends React.PureComponent {
-  props: Props;
+export default class SaalVideo extends React.PureComponent<Props, State> {
   stopRendering = false;
-  state: State = {
+  state = {
     muted: true,
   };
   toggleMute = () => {
@@ -39,10 +38,14 @@ export default class SaalVideo extends React.PureComponent {
     const { VisualizeComponent, children, minWidth, ctx, name } = this.props;
     const { muted } = this.state;
     const muteNode = muted
-      ? <span style={style.muted}>{'muted'}</span>
+      ? <span style={style.muted}>
+          {'muted'}
+        </span>
       : <span />;
     const removeNode = (
-      <span style={style.remove} onClick={this.remove}>{'[-]'}</span>
+      <span style={style.remove} onClick={this.remove}>
+        {'[-]'}
+      </span>
     );
     return (
       <div
@@ -51,7 +54,11 @@ export default class SaalVideo extends React.PureComponent {
           minWidth: `${minWidth}%`,
         }}
         onClick={this.toggleMute}>
-        <h2 style={style.head}>{removeNode}{name}{muteNode}</h2>
+        <h2 style={style.head}>
+          {removeNode}
+          {name}
+          {muteNode}
+        </h2>
         {children}
         <VisualizeComponent muted={muted} ctx={ctx} />
       </div>
